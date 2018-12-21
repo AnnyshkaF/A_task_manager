@@ -18,16 +18,11 @@ public class TaskTable extends HttpServlet {
         String uri = request.getRequestURI();
         PrintWriter out = response.getWriter();
         if(uri.equals("/A_task_man/TaskTable/delete")) {
-            //String res = "/TaskDeleting/" + request.getParameter("hash");
-            //response.sendRedirect(res);
             request.getRequestDispatcher("/TaskDeleting").forward(request, response);
-            //response.sendRedirect("/A_task_man/TaskDeleting");
-            return;
-            //out.println("<h1>COME</h1>");
+            return; 
         }
 
         out.println("<html><head>");
-        //out.println("<link rel=\"stylesheet\" href=\"style2.css\"/>");
         String name = "";
         out.println("</head><body>");
         HttpSession session = request.getSession(false);
