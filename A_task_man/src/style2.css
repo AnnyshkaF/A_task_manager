@@ -1,61 +1,77 @@
-prod {
-	 line-height: 2;	/*comm*/
-}
-product {
-	color:purple;
-	/*border-color: orange;
-	border-style: solid;*/
-    	border-width: 5px;
-	height: 1px;
-	padding: 5px;
-	font-size:20px;
-}
-username {
-	color:red;
-	font-size: 20px;
-	height: 1px;
-	padding: 5px;
-}
 
+.Group {
+  cursor: default;
+  margin-right: 20px;
+  margin-bottom: 10px;
+  box-shadow: none;
+  border-width: 2px;
+  border-radius: 3px;
+  border-style: solid;
+  padding: 8px;
+  font-size: 20px;
+  color: rgba(100,20,1);
+  border-color: #1379FE;
+  background-color: transparent;
+}
 a {
-	color: green;
-	font-family: "Arial Black", Gadget, sans-serif;
-	font-size: 20px;	
-}
-
-a:visited {
-    color: green;
+  margin: auto;
+  font-family: sans-serif;
+  text-decoration: none;
+  font-size: 15px;
+  color: gray;
+  position: relative;
+  transition: all .3s cubic-bezier(.2, 0, 0, 1);
+  z-index: 1;
 }
 
 a:hover {
-    color: orange;
-}
-
-form {
-	font-size:30px;
-}
-input[type=submit] {
-    width: 20%;
-    background-color: #4CAF50;
-    color: white;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-input[type=text], input[type=password] {
-    width: 30%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
+    color: black;
+  }
+ a:after {
+      right: 0;
+      left: 0;
+      height: 100%;
+    }
 a[expired=true] {
 	color: red;
+}
+input {
+  text-decoration: none;
+  outline: none;
+  display: inline-block;
+  padding: 10px 30px;
+  margin: 10px 20px;
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #fe6637;
+  border-radius: 8px;
+  font-family: 'Montserrat', sans-serif; 
+  color: #fe6637;
+  transition: .2s ease-in-out;
+}
+input:before {
+  content: "";
+  background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.5));
+  height: 50px;
+  width: 50px;
+}
+input:hover {
+  background: grey;
+  color: #fff;
+}
+input:hover:before {
+  left: 150px;
+  transition: .5s ease-in-out;
+}
+
+p{
+  display: block;
+  background: #1379FE;
+  padding: 8px;
+  font-size: 40px;
+  color: white;
+  
+  border-color: #1379FE;
 }
 
 table {
@@ -79,5 +95,4 @@ td[color=Undone]{
 td[color=Todo]{
 	background: #0099ff;
 }
-
 

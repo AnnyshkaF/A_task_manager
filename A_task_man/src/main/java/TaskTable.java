@@ -36,9 +36,11 @@ public class TaskTable extends HttpServlet {
             request.getRequestDispatcher("login.html").include(request, response);
             out.println("Login first");
             out.println("</body></html>");
-            out.close();
+            
             return;
         }
+	out.println("<p>Tasks</p>");
+	out.println("Hello, " + name);
         try {
             new TaskIO().loadTasksFromFile("tasks.xml", taskBase);
         } catch (Exception e) {
