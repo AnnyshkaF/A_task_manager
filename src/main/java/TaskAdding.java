@@ -6,7 +6,6 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
@@ -38,7 +37,6 @@ public class TaskAdding extends HttpServlet {
             return;
         }
         if (uri.equals("/A_task_man/TaskAdding/add")) {
-            //request.getRequestDispatcher().include(request, response);
             String name = request.getParameter("name");
             String description = request.getParameter("description");
             String[] users = request.getParameterValues("user");
@@ -96,10 +94,9 @@ public class TaskAdding extends HttpServlet {
         new ReaderWriter().read("users.txt", map);
         groups = taskBase.getGroups();
         sb.append("<form method=\"GET\" action=\"/A_task_man/TaskAdding/add\">\n");
-
-        sb.append("Task name: <input type=\"text\" name=\"name\">\n");
-        sb.append("Task Description: <input type=\"text\" name=\"description\">\n");
-        sb.append("<br>Give a task to:<br>\n");    //select from users
+        sb.append("Task name: <input type=\"text\" name=\"name\"><br>\n");
+        sb.append("Task Description: <input type=\"text\" name=\"description\"><br>\n");
+        sb.append("<br>Give a task to:<br>\n");   
         for (Map.Entry<String, String> entry : map.entrySet()) {
             String user = entry.getKey();
             sb.append("<input type=\"checkbox\"");
@@ -113,25 +110,25 @@ public class TaskAdding extends HttpServlet {
             sb.append("<br>");
         }
         sb.append("<input type=\"checkbox\" name=\"is_visible_to_others\" value=\"visible\">Make visible to everyone<br>");
+        sb.append("Select group:");
         sb.append("<select name=\"group\">");
         for (int i = 0; i < groups.size(); i++) {
-            //<option value="volvo">Volvo</option>
             sb.append("<option value=\"");
             sb.append(groups.get(i));
             sb.append("\">\n");
             sb.append(groups.get(i));
             sb.append("</option>");
         }
-        sb.append("</select>");
-        sb.append("Create new group: <input type=\"text\" name=\"new_group\"><br>");
+        sb.append("</select><br>");
+        sb.append("Create new group: <input type=\"text\" name=\"new_group\"><br>\n");
 
-        sb.append("Deadline: <input type=\"date\" name=\"outcome_date\">\n");//2018-15-12
-        sb.append("Time: <input type=\"time\" name=\"time\">"); //
-        sb.append("<input type=\"submit\" value=\"add\">\n");
+        sb.append("Deadline: <input type=\"date\" name=\"outcome_date\">\n");
+        sb.append("Time: <input type=\"time\" name=\"time\"><br>\n");
+        sb.append("<input type=\"submit\" value=\"add\"><br>\n");
         sb.append("</form>");
 
-        sb.append("<form method=\"GET\" action=\"/A_task_man/TaskAdding/cancel\">\n");
-        sb.append("<input type=\"submit\" value=\"cancel\">\n");
+        sb.append("<form method=\"GET\" action=\"/A_task_man/TaskAdding/cancel\"><br>\n");
+        sb.append("<input type=\"submit\" value=\"cancel\"><br>\n");
         sb.append("</form>");
 
         return sb.toString();
@@ -150,22 +147,11 @@ public class TaskAdding extends HttpServlet {
     }
 
     public static String parseDate(String date){
-        //2018-01-02
         String res = "";
         String[] s = date.split("-");
         if(s.length == 3) {
              res = s[1] + "-" + s[2] + "-" + s[0];
         }
         return res;
-        //01-02-2018
-    }
-
-    public static void main(String[] args) {
-        System.out.println(parseDate("2019-11-01"));
-        System.out.println(parseDate(java.util.Date.from(Instant.now()).toString()));
-        java.util.Date dateNow = new java.util.Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd-MM-yyyy hh:mm");
-        String currentDate = formatForDateNow.format(dateNow);
-        System.out.println(currentDate);
     }
 }

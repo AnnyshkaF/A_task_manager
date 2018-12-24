@@ -27,57 +27,43 @@ public class Date {
         add("Nov");
         add("Dec");
     }};
-    private int month;
-    private int day;
-    private int hour;
-    private int minute;
-    private int year;
+    private String month;
+    private String day;
+    private String hour;
+    private String minute;
+    private String year;
 
     public Date() {
     }
-
     ;
 
-    public Date(String date) {
-        //06-12-2018 13:30
-        String[] arr = date.split(" ");
-        this.year = Integer.parseInt(arr[3]);
-        this.month = months.indexOf(arr[1]) + 1;
-        this.day = Integer.parseInt(arr[2]);
-        String[] hms = arr[3].split(":");
-        this.hour = Integer.parseInt(hms[0]);
-        this.minute = Integer.parseInt(hms[1]);
-    }
-
-    //http://localhost:8080/TaskAdding/add?name=task4&description=description4&user=user1&outcome_date=2018-12-07&time=17%3A59
     public Date(String date, String time) {
-        //06-12-2018 13:30
         String[] d = date.split("-");
-        this.day = Integer.parseInt(d[2]);
-        this.month = Integer.parseInt(d[1]);
-        this.year = Integer.parseInt(d[0]);
+        this.day = d[2];
+        this.month = d[1];
+        this.year = d[0];
         String[] t = time.split(":");
-        this.hour = Integer.parseInt(t[0]);
-        this.minute = Integer.parseInt(t[1]);
+        this.hour = t[0];
+        this.minute = t[1];
     }
 
-    public int getDay() {
+    public String getDay() {
         return day;
     }
 
-    public int getMonth() {
+    public String getMonth() {
         return month;
     }
 
-    public int getHour() {
+    public String getHour() {
         return hour;
     }
 
-    public int getMinute() {
+    public String getMinute() {
         return minute;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
@@ -97,29 +83,17 @@ public class Date {
     }
 
     public boolean compareFirstIsMore(Date date1, Date date2) {
-        if (date1.year > date2.year) return true;
-        if (date1.year < date2.year) return false;
-        if (date1.month > date2.month) return true;
-        if (date1.month < date2.month) return false;
-        if (date1.day > date2.day) return true;
-        if (date1.day < date2.day) return false;
-        if (date1.hour > date2.hour) return true;
-        if (date1.hour < date2.hour) return false;
-        if (date1.minute > date2.minute) return true;
-        if (date1.minute < date2.minute) return false;
+        if (Integer.parseInt(date1.year) > Integer.parseInt(date2.year)) return true;
+        if (Integer.parseInt(date1.year) < Integer.parseInt(date2.year)) return false;
+        if (Integer.parseInt(date1.month) > Integer.parseInt(date2.month)) return true;
+        if (Integer.parseInt(date1.month) < Integer.parseInt(date2.month)) return false;
+        if (Integer.parseInt(date1.day) > Integer.parseInt(date2.day)) return true;
+        if (Integer.parseInt(date1.day) < Integer.parseInt(date2.day)) return false;
+        if (Integer.parseInt(date1.hour) > Integer.parseInt(date2.hour)) return true;
+        if (Integer.parseInt(date1.hour) < Integer.parseInt(date2.hour)) return false;
+        if (Integer.parseInt(date1.minute) > Integer.parseInt(date2.minute)) return true;
+        if (Integer.parseInt(date1.minute) < Integer.parseInt(date2.minute)) return false;
         return false;
-    }
-
-    public static void main(String[] args) {
-        String[] d = {"Day of the week:", "Month:", "Date:", "Time:", "TimeRegion:", "Year:"};
-        String date = java.util.Date.from(Instant.now()).toString();
-        System.out.println(date);
-        String[] dat = date.split(" ");
-
-        Date date1 = new Date(java.util.Date.from(Instant.now()).toString());
-        String date2 = java.util.Date.from(Instant.now()).toString();
-        //System.out.println(day > date2);
-        System.out.println(date1);
     }
 }
 

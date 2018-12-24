@@ -19,7 +19,6 @@ public class TaskBase {
         taskBase.add(task);
     }
 
-    // make it done
     public void deleteTask(Task task) {
         Task tmp = task;
         tmp.setCondition(true);
@@ -158,7 +157,7 @@ public class TaskBase {
         for (int i = 0; i < 5; i++) {
             sb.append("<tr>\n");
             for (int j = 0; j < 12; j++) {
-                //<td style="background:#C0C0C0"></td>
+ 
                 if(done[i][j] > undone[i][j] && done[i][j] > todo[i][j]){
                     sb.append("<td color=\"").append("Done").append("\"></td>\n");
                 }

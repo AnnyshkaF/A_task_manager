@@ -5,6 +5,7 @@ var isOpened = [];
 var groupNames = [];
 var init = false;
 var bars = document.getElementsByTagName('br');
+var flags = document.getElementsByTagName('flag');
 
 if (!init) {
     var gr = document.getElementsByClassName("Group");
@@ -44,10 +45,12 @@ function open_close(event) {
         //opened, so close
         closeChecksRefsBars(index);
         isOpened[group] = false;
+        flags[index].innerHTML = "-";
     } else {
         //closed, so open
         openChecksRefsBars(index);
         isOpened[group] = true;
+        flags[index].innerHTML = "+";
     }
     console.log(isOpened);
 }

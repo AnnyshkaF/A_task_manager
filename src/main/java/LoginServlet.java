@@ -19,9 +19,7 @@ public class LoginServlet extends HttpServlet {
 
         TreeMap<String,String> map = new TreeMap<String, String>();
 	new ReaderWriter().read("users.txt", map);
-	/*if(map.get(name) == null){
-		map.put(name, password);	
-	}*/
+
         if( password.equals(map.get(name)) ){
             request.getRequestDispatcher("auth_links.html").include(request, response);
             out.print("Welcome, " + name);

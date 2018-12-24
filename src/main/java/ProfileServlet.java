@@ -1,24 +1,17 @@
-
 import io.TaskIO;
 import model.Date;
+import model.Task;
 import model.TaskBase;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ProfileServlet extends HttpServlet {
-    public static Map<String, String> colors = new TreeMap<String, String>() {{
-        put("Red", "#FF0000");
-        put("Orange", "#FFA500");
-        put("Blue", "#0000FF");
-        put("Violet", "#6A5ACD");
-        put("Green", "#3CB371");
-        put("White", "#FFFFFF");
 
-    }};
     private TaskBase taskBase = new TaskBase();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -29,7 +22,6 @@ public class ProfileServlet extends HttpServlet {
         PrintWriter out = response.getWriter();
         String user = session.getAttribute("name").toString();
         out.println("<html><body>");
-
         if (session != null) {
             request.getRequestDispatcher("auth_links.html").include(request, response);
             String name = (String) session.getAttribute("name");
@@ -54,39 +46,62 @@ public class ProfileServlet extends HttpServlet {
 
     private String getTable(String user) {
         StringBuilder sb = new StringBuilder();
-        int[][] done = taskBase.calculateDoneStatistics(user);
-        int[][] undone = taskBase.calculateNotDoneStatistics(user);
-        int[][] todo = taskBase.calculateToDoStatistics(user);
+        TreeMap<String, ArrayList<Task>> done = taskBase.calculateDoneStatistics(user);
+        TreeMap<String, ArrayList<Task>> undone = taskBase.calculateNotDoneStatistics(user);
+        TreeMap<String, ArrayList<Task>> todo = taskBase.calculateToDoStatistics(user);
 
         sb.append("<table>\n");
         sb.append("<tr>\n");
         for (int j = 0; j < 12; j++) {
             sb.append("<th>").append(Date.months.get(j)).append("</th>\n");
         }
+      
         sb.append("</tr>\n");
         for (int i = 0; i < 5; i++) {
             sb.append("<tr>\n");
             for (int j = 0; j < 12; j++) {
-                //<td style="background:#C0C0C0"></td>
-                if(done[i][j] > undone[i][j] && done[i][j] > todo[i][j]){
+             
+                if(done.get(index(i,j)).size() > undone.get(index(i,j)).size() && done.get(index(i,j)).size() > todo.get(index(i,j)).size()){
                     sb.append("<td color=\"").append("Done").append("\"");
-                    sb.append(" title=\"Done = ").append(done[i][j]).append("\"");
-                    sb.append("></td>\n");
                 }
-                else if(undone[i][j] > done[i][j] && undone[i][j] > todo[i][j]){
+                else if(undone.get(index(i,j)).size() > done.get(index(i,j)).size() && undone.get(index(i,j)).size() > todo.get(index(i,j)).size()){
                     sb.append("<td color=\"").append("Undone").append("\"");
-                    sb.append(" title=\"Undone = ").append(undone[i][j]).append("\"");
-                    sb.append("></td>\n");
+                }
+                else if(todo.get(index(i,j)).size() > done.get(index(i,j)).size() && todo.get(index(i,j)).size() > undone.get(index(i,j)).size()){
+                    sb.append("<td color=\"").append("Todo").append("\"");
                 }
                 else {
-                    sb.append("<td color=\"").append("Todo").append("\"");
-                    sb.append(" title=\"Todo = ").append(todo[i][j]).append("\"");
-                    sb.append("></td>\n");
+                    sb.append("<td color=\"").append("Free").append("\"");
                 }
+                sb.append(" title=\"Done = ").append(done.get(index(i,j)).size());
+                sb.append(" Undone = ").append(undone.get(index(i,j)).size());
+                sb.append(" Todo = ").append(todo.get(index(i,j)).size()).append("\">");
+                sb.append("<a href=\"TasksPerPeriod/period?").append("r=").append(i).append("&c=").append(j).append("\"></a>");
+                sb.append("</td>\n");
+           
             }
             sb.append("</tr>\n");
         }
         sb.append("</table>\n");
         return sb.toString();
+    }
+    private static String index(int i, int j){
+        return String.valueOf(i + "-" + j);
+    }
+
+    private String getTasks(Map<String, ArrayList<Task>> map){
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 12; j++) {
+                ArrayList<Task> t = map.get(index(i, j));
+                if(t.size() != 0){
+                    for (int k = 0; k < t.size(); k++) {
+                        sb.append(t.get(k).getName());
+                        sb.append("\n");
+                    }
+                }
+            }
+        }
+        return  sb.toString();
     }
 }

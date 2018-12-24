@@ -21,7 +21,7 @@ import java.time.Instant;
 
 public class TaskIO {
     public static void main(String[] args) throws Exception{
-        TaskIO taskIO = new TaskIO();
+       /* TaskIO taskIO = new TaskIO();
         TaskBase taskBase = new TaskBase();
         TaskBase loadedBase = new TaskBase();
         Task task1 = new Task("task1", "description1", "user1", "user1", new Date(java.util.Date.from(Instant.now()).toString()), new Date(java.util.Date.from(Instant.from(Instant.now()).plusSeconds(3)).toString()), "family", false);
@@ -32,7 +32,7 @@ public class TaskIO {
         taskBase.addTask(task3);
         taskIO.saveTasksToFile("C:/Users/Anna/Desktop/tasks.xml", taskBase);
         taskIO.loadTasksFromFile("C:/Users/Anna/Desktop/tasks.xml", loadedBase);
-        System.out.println(loadedBase);
+        System.out.println(loadedBase);*/
     }
 
     public synchronized void loadTasksFromFile(String filename, TaskBase taskBase)throws Exception {

@@ -26,7 +26,9 @@ public class TaskTable extends HttpServlet {
         String name = "";
         out.println("</head><body>");
         HttpSession session = request.getSession(false);
-		
+        // name of program =
+        // getServletContext().getRealPath("/").split("/")[5]
+
         if (session != null) {
             request.getRequestDispatcher("auth_links.html").include(request, response);
             name = (String) session.getAttribute("name");
