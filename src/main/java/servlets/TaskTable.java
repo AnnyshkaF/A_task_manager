@@ -1,5 +1,5 @@
+package servlets;
 
-import io.TaskIO;
 import model.Task;
 import model.TaskBase;
 
@@ -9,7 +9,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class TaskTable extends HttpServlet {
-    TaskBase taskBase = new TaskBase();
+    private TaskBase taskBase = TaskBase.getInstance();
 
     protected void service(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -26,8 +26,6 @@ public class TaskTable extends HttpServlet {
         String name = "";
         out.println("</head><body>");
         HttpSession session = request.getSession(false);
-        // name of program =
-        // getServletContext().getRealPath("/").split("/")[5]
 
         if (session != null) {
             request.getRequestDispatcher("auth_links.html").include(request, response);
@@ -44,7 +42,7 @@ public class TaskTable extends HttpServlet {
 	out.println("<p>Tasks</p>");
 	out.println("Hello, " + name);
         try {
-            new TaskIO().loadTasksFromFile("tasks.xml", taskBase);
+            taskBase.loadTaskBase();
         } catch (Exception e) {
             out.println("Error reading from file");
             out.println("</body></html>");

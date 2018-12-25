@@ -1,18 +1,18 @@
-import io.TaskIO;
+package servlets;
+
 import model.Date;
 import model.Task;
 import model.TaskBase;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.TreeMap;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
 public class ProfileServlet extends HttpServlet {
 
-    private TaskBase taskBase = new TaskBase();
+    private TaskBase taskBase = TaskBase.getInstance();
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -32,7 +32,7 @@ public class ProfileServlet extends HttpServlet {
             request.getRequestDispatcher("login.html").include(request, response);
         }
         try {
-            new TaskIO().loadTasksFromFile("tasks.xml", taskBase);
+            taskBase.loadTaskBase();
         } catch (Exception e) {
             out.println("Error reading from file");
             out.println("</body></html>");
@@ -55,16 +55,14 @@ public class ProfileServlet extends HttpServlet {
         for (int j = 0; j < 12; j++) {
             sb.append("<th>").append(Date.months.get(j)).append("</th>\n");
         }
-      
         sb.append("</tr>\n");
         for (int i = 0; i < 5; i++) {
             sb.append("<tr>\n");
             for (int j = 0; j < 12; j++) {
-             
                 if(done.get(index(i,j)).size() > undone.get(index(i,j)).size() && done.get(index(i,j)).size() > todo.get(index(i,j)).size()){
                     sb.append("<td color=\"").append("Done").append("\"");
                 }
-                else if(undone.get(index(i,j)).size() > done.get(index(i,j)).size() && undone.get(index(i,j)).size() > todo.get(index(i,j)).size()){
+                else if(undone.get(index(i,j)).size() > 0){
                     sb.append("<td color=\"").append("Undone").append("\"");
                 }
                 else if(todo.get(index(i,j)).size() > done.get(index(i,j)).size() && todo.get(index(i,j)).size() > undone.get(index(i,j)).size()){
@@ -78,7 +76,6 @@ public class ProfileServlet extends HttpServlet {
                 sb.append(" Todo = ").append(todo.get(index(i,j)).size()).append("\">");
                 sb.append("<a href=\"TasksPerPeriod/period?").append("r=").append(i).append("&c=").append(j).append("\"></a>");
                 sb.append("</td>\n");
-           
             }
             sb.append("</tr>\n");
         }
@@ -87,21 +84,5 @@ public class ProfileServlet extends HttpServlet {
     }
     private static String index(int i, int j){
         return String.valueOf(i + "-" + j);
-    }
-
-    private String getTasks(Map<String, ArrayList<Task>> map){
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 12; j++) {
-                ArrayList<Task> t = map.get(index(i, j));
-                if(t.size() != 0){
-                    for (int k = 0; k < t.size(); k++) {
-                        sb.append(t.get(k).getName());
-                        sb.append("\n");
-                    }
-                }
-            }
-        }
-        return  sb.toString();
     }
 }

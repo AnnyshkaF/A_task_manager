@@ -1,5 +1,5 @@
+package servlets;
 
-import io.TaskIO;
 import model.TaskBase;
 
 import javax.servlet.ServletConfig;
@@ -13,7 +13,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class TaskDeleting extends HttpServlet {
-    TaskBase taskBase = new TaskBase();
+    TaskBase taskBase = TaskBase.getInstance();
 
     public void init(ServletConfig config) {
     }
@@ -27,7 +27,7 @@ public class TaskDeleting extends HttpServlet {
         PrintWriter out = response.getWriter();
 
         try {
-            new TaskIO().loadTasksFromFile("tasks.xml", taskBase);
+            taskBase.loadTaskBase();
         } catch (Exception e) {
             out.println("<html>\n<body>\n");
             request.getRequestDispatcher("auth_links.html").include(request, response);
@@ -52,7 +52,7 @@ public class TaskDeleting extends HttpServlet {
         }
 
         try {
-            new TaskIO().saveTasksToFile("tasks.xml", taskBase);
+            taskBase.saveTaskBase();
         } catch (Exception e) {
             out.println("<html>\n<body>\n");
             request.getRequestDispatcher("auth_links.html").include(request, response);

@@ -1,5 +1,7 @@
+package servlets;
 
 import io.*;
+import model.TaskFields;
 
 import java.io.*;
 import javax.servlet.*;
@@ -11,7 +13,7 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
                     throws ServletException, IOException {
         response.setContentType("text/html");
-        String name = request.getParameter("name");
+        String name = request.getParameter(TaskFields.NAME);
         String password = request.getParameter("password");
 
         PrintWriter out = response.getWriter();
@@ -24,7 +26,7 @@ public class LoginServlet extends HttpServlet {
             request.getRequestDispatcher("auth_links.html").include(request, response);
             out.print("Welcome, " + name);
             HttpSession session = request.getSession();
-            session.setAttribute("name", name);
+            session.setAttribute(TaskFields.NAME, name);
 	    new ReaderWriter().write("users.txt", map);
         }
         else{

@@ -1,12 +1,18 @@
 package model;
 
 import io.TaskIO;
-
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class TaskBase {
+    private static TaskBase _instance = null;
+
     private List<Task> taskBase = new ArrayList<Task>();
+
+    public synchronized static TaskBase getInstance() {
+        if (_instance == null)
+            _instance = new TaskBase();
+        return _instance;
+    }
 
     public TaskBase() {
     }
@@ -19,6 +25,7 @@ public class TaskBase {
         taskBase.add(task);
     }
 
+    // make it done
     public void deleteTask(Task task) {
         Task tmp = task;
         tmp.setCondition(true);
@@ -30,12 +37,14 @@ public class TaskBase {
         taskBase.remove(task);
     }
 
-    public ArrayList<String> getGroups() {
+    public ArrayList<String> getGroups(String username) {
         ArrayList<String> groups = new ArrayList<>();
         for (int i = 0; i < taskBase.size(); i++) {
-            String tmpGroup = taskBase.get(i).getGroup();
-            if (!groups.contains(tmpGroup)) {
-                groups.add(tmpGroup);
+            Task tmp = taskBase.get(i);
+            if(tmp.getUser().equals(username)) {
+                if (!groups.contains(tmp.getGroup())) {
+                    groups.add(tmp.getGroup());
+                }
             }
         }
         return groups;
@@ -75,59 +84,65 @@ public class TaskBase {
         return false;
     }
 
-    public int[][] calculateNotDoneStatistics(String name) {
-        int[][] s = new int[5][12];
+    public TreeMap<String, ArrayList<Task>> calculateNotDoneStatistics(String name) {
+        TreeMap<String, ArrayList<Task>> tasks = new TreeMap<>();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 12; j++) {
+                tasks.put(index(i, j), new ArrayList<>());
+            }
+        }
         for (int i = 0; i < taskBase.size(); i++) {
             Task task = taskBase.get(i);
             if (task.getUser().equals(name)) {
                 if (task.isExpired() && !task.getCondition()) {
-                    int row = task.getOutcomeDate().getDay() / 6;
+                    int row = Integer.parseInt(task.getOutcomeDate().getDay()) / 6;
                     if (row > 4) row = 4;
-                    s[row][task.getOutcomeDate().getMonth() - 1]++;
+                    tasks.get(index(row, (Integer.parseInt(task.getOutcomeDate().getMonth()) - 1))).add(task);
                 }
             }
         }
-        return s;
+        return tasks;
     }
 
-    public int[][] calculateToDoStatistics(String name) {
-        int[][] s = new int[5][12];
+    public TreeMap<String, ArrayList<Task>> calculateToDoStatistics(String name) {
+        TreeMap<String, ArrayList<Task>> tasks = new TreeMap<>();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 12; j++) {
+                tasks.put(index(i, j), new ArrayList<>());
+            }
+        }
         for (int i = 0; i < taskBase.size(); i++) {
             Task task = taskBase.get(i);
             if (task.getUser().equals(name)) {
                 if (!task.isExpired() && !task.getCondition()) {
-                    int row = task.getOutcomeDate().getDay() / 6;
+                    int row = Integer.parseInt(task.getOutcomeDate().getDay()) / 6;
                     if (row > 4) row = 4;
-                    s[row][task.getOutcomeDate().getMonth() - 1]++;
+                    tasks.get(index(row, (Integer.parseInt(task.getOutcomeDate().getMonth()) - 1))).add(task);
                 }
             }
         }
-        return s;
+        return tasks;
     }
 
-    public int[][] calculateDoneStatistics(String name) {
-        int[][] s = new int[5][12];
+    public TreeMap<String, ArrayList<Task>> calculateDoneStatistics(String name) {
+        TreeMap<String, ArrayList<Task>> tasks = new TreeMap<>();
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 12; j++) {
+                tasks.put(index(i, j), new ArrayList<>());
+            }
+        }
         for (int i = 0; i < taskBase.size(); i++) {
             Task task = taskBase.get(i);
+
             if (task.getUser().equals(name)) {
                 if (task.getCondition()) {
-                    int row = task.getOutcomeDate().getDay() / 6;
+                    int row = Integer.parseInt(task.getOutcomeDate().getDay()) / 6;
                     if (row > 4) row = 4;
-                    s[row][task.getOutcomeDate().getMonth() - 1]++;
+                    tasks.get(index(row, (Integer.parseInt(task.getOutcomeDate().getMonth()) - 1))).add(task);
                 }
             }
         }
-        return s;
-    }
-
-    public int calculateSum(int[][] stat){
-        int sum = 0;
-        for (int i = 0; i < stat.length; i++) {
-            for (int j = 0; j < stat[i].length; j++) {
-                sum = sum + stat[i][j];
-            }
-        }
-        return sum;
+        return tasks;
     }
 
     @Override
@@ -139,39 +154,22 @@ public class TaskBase {
         return sb.toString();
     }
 
-    public static void main(String[] args) throws Exception {
-        TaskBase taskBase = new TaskBase();
-        StringBuilder sb = new StringBuilder();
-        new TaskIO().loadTasksFromFile("C:/Users/Anna/Desktop/calc.xml", taskBase);
-        int[][] done = taskBase.calculateDoneStatistics("Anna");
-        int[][] undone = taskBase.calculateNotDoneStatistics("Anna");
-        int[][] todo = taskBase.calculateToDoStatistics("Anna");
-
-
-        sb.append("<table>\n");
-        sb.append("<tr>\n");
-        for (int j = 0; j < 12; j++) {
-            sb.append("<th>").append(Date.months.get(j)).append("</th>\n");
-        }
-        sb.append("</tr>\n");
-        for (int i = 0; i < 5; i++) {
-            sb.append("<tr>\n");
-            for (int j = 0; j < 12; j++) {
- 
-                if(done[i][j] > undone[i][j] && done[i][j] > todo[i][j]){
-                    sb.append("<td color=\"").append("Done").append("\"></td>\n");
-                }
-                else if(undone[i][j] > done[i][j] && undone[i][j] > todo[i][j]){
-                    sb.append("<td color=\"").append("Undone").append("\"></td>\n");
-                }
-                else
-                    sb.append("<td color=\"").append("Todo").append("\"></td>\n");
-            }
-            sb.append("</tr>\n");
-        }
-        sb.append("</table>\n");
-        System.out.println(sb.toString());
+    private static String index(int i, int j){
+        return String.valueOf(i + "-" + j);
     }
-}
 
+    public void loadTaskBase(){
+        try {
+            new TaskIO().loadTasksFromFile("tasks.xml", this);
+        } catch (Exception e) {
+        }
+    }
+    public void saveTaskBase(){
+        try {
+            new TaskIO().saveTasksToFile("tasks.xml", this);
+        } catch (Exception e) {
+        }
+    }
+
+}
 
