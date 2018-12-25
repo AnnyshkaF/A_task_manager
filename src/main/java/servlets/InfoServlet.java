@@ -42,6 +42,7 @@ public class InfoServlet extends HttpServlet {
     private String getTaskInfo(String hash) {
         StringBuilder sb = new StringBuilder();
         try {
+            taskBase.loadTaskBase();
         } catch (Exception e) {
             e.printStackTrace();
         }
