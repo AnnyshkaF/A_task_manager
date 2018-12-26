@@ -55,7 +55,7 @@ public class TaskTable extends HttpServlet {
 
     public String getList(String name) {
         StringBuilder sb = new StringBuilder();
-        ArrayList<String> groups = taskBase.getGroups();
+        ArrayList<String> groups = taskBase.getGroups(name);
         sb.append("<form method=\"GET\" action=\"/A_task_man/TaskTable/delete\">\n");
         sb.append("<ol class=\"list\" id = \"tasks\">\n");
         for (int j = 0; j < groups.size(); j++) {

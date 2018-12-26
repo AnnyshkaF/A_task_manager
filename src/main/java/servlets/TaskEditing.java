@@ -102,7 +102,7 @@ public class TaskEditing extends HttpServlet {
         StringBuilder sb = new StringBuilder();
         Task task = taskBase.getTask(hash);
         new ReaderWriter().read("users.txt", map);
-        groups = taskBase.getGroups();
+        groups = taskBase.getGroups(username);
         sb.append("<form method=\"GET\" action=\"/A_task_man/TaskEditing/OK\">\n");
 
         sb.append("<input style=\"visibility:hidden\" type=\"text\" name=\"old_hash\" value=\"").append(hash).append("\" readonly>\n");

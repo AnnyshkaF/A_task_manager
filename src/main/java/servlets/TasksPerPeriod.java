@@ -41,11 +41,12 @@ public class TasksPerPeriod extends HttpServlet {
         }
         int r = Integer.parseInt(request.getParameter("r"));
         int c = Integer.parseInt(request.getParameter("c"));
-        out.println(getList(name, r, c));
+        String year = request.getParameter("year");
+        out.println(getList(name, r, c, year));
         out.println("</body></html>");
     }
 
-    public static String getList(String user, int r, int c) {
+    public static String getList(String user, int r, int c, String year) {
         StringBuilder sb = new StringBuilder();
         sb.append("<form method=\"GET\" action=\"/A_task_man/TasksPerPeriod/cancel\">\n");
         sb.append("<input type=\"submit\" value=\"cancel\">\n");
@@ -54,15 +55,15 @@ public class TasksPerPeriod extends HttpServlet {
         TreeMap<String, ArrayList<Task>> values = new TreeMap<String, ArrayList<Task>>();
         for (int j = 0; j < 3; j++) {
             if (j == 0) {
-                values = taskBase.calculateDoneStatistics(user);
+                values = taskBase.calculateDoneStatistics(user, year);
                 sb.append("<h1>Done</h1>\n");
             }
             if (j == 1) {
-                values = taskBase.calculateNotDoneStatistics(user);
+                values = taskBase.calculateNotDoneStatistics(user, year);
                 sb.append("<h1>Undone</h1>\n");
             }
             if (j == 2) {
-                values = taskBase.calculateToDoStatistics(user);
+                values = taskBase.calculateToDoStatistics(user, year);
                 sb.append("<h1>ToDo</h1>\n");
             }
 

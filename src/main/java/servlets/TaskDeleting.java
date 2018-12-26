@@ -1,6 +1,7 @@
 package servlets;
 
 import model.TaskBase;
+import model.TaskFields;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -25,7 +26,7 @@ public class TaskDeleting extends HttpServlet {
         HttpSession session = request.getSession(false);
         String uri = request.getRequestURI();
         PrintWriter out = response.getWriter();
-
+        String username = session.getAttribute(TaskFields.NAME).toString();
         try {
             taskBase.loadTaskBase();
         } catch (Exception e) {
@@ -36,7 +37,7 @@ public class TaskDeleting extends HttpServlet {
         }
       
         ArrayList<String> hash = new ArrayList<>();
-        ArrayList<String> groups = taskBase.getGroups();
+        ArrayList<String> groups = taskBase.getGroups(username);
         for (int i = 0; i < groups.size(); i++) {
             String curName = groups.get(i) + "_checkbox";
              if(request.getParameter(curName) != null) {

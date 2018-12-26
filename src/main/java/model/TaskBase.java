@@ -5,7 +5,7 @@ import java.util.*;
 
 public class TaskBase {
     private static TaskBase _instance = null;
-
+    public String year = "2018";
     private List<Task> taskBase = new ArrayList<Task>();
 
     public synchronized static TaskBase getInstance() {
@@ -41,7 +41,7 @@ public class TaskBase {
         ArrayList<String> groups = new ArrayList<>();
         for (int i = 0; i < taskBase.size(); i++) {
             Task tmp = taskBase.get(i);
-            if(tmp.getUser().equals(username)) {
+            if(tmp.getUser().equals(username) && !tmp.getCondition()) {
                 if (!groups.contains(tmp.getGroup())) {
                     groups.add(tmp.getGroup());
                 }
@@ -84,7 +84,7 @@ public class TaskBase {
         return false;
     }
 
-    public TreeMap<String, ArrayList<Task>> calculateNotDoneStatistics(String name) {
+    public TreeMap<String, ArrayList<Task>> calculateNotDoneStatistics(String name, String year) {
         TreeMap<String, ArrayList<Task>> tasks = new TreeMap<>();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 12; j++) {
@@ -93,7 +93,7 @@ public class TaskBase {
         }
         for (int i = 0; i < taskBase.size(); i++) {
             Task task = taskBase.get(i);
-            if (task.getUser().equals(name)) {
+            if (task.getUser().equals(name) && task.getOutcomeDate().getYear().equals(year)) {
                 if (task.isExpired() && !task.getCondition()) {
                     int row = Integer.parseInt(task.getOutcomeDate().getDay()) / 6;
                     if (row > 4) row = 4;
@@ -104,7 +104,7 @@ public class TaskBase {
         return tasks;
     }
 
-    public TreeMap<String, ArrayList<Task>> calculateToDoStatistics(String name) {
+    public TreeMap<String, ArrayList<Task>> calculateToDoStatistics(String name, String year) {
         TreeMap<String, ArrayList<Task>> tasks = new TreeMap<>();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 12; j++) {
@@ -113,7 +113,7 @@ public class TaskBase {
         }
         for (int i = 0; i < taskBase.size(); i++) {
             Task task = taskBase.get(i);
-            if (task.getUser().equals(name)) {
+            if (task.getUser().equals(name)&& task.getOutcomeDate().getYear().equals(year)) {
                 if (!task.isExpired() && !task.getCondition()) {
                     int row = Integer.parseInt(task.getOutcomeDate().getDay()) / 6;
                     if (row > 4) row = 4;
@@ -124,7 +124,7 @@ public class TaskBase {
         return tasks;
     }
 
-    public TreeMap<String, ArrayList<Task>> calculateDoneStatistics(String name) {
+    public TreeMap<String, ArrayList<Task>> calculateDoneStatistics(String name, String year) {
         TreeMap<String, ArrayList<Task>> tasks = new TreeMap<>();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 12; j++) {
@@ -134,7 +134,7 @@ public class TaskBase {
         for (int i = 0; i < taskBase.size(); i++) {
             Task task = taskBase.get(i);
 
-            if (task.getUser().equals(name)) {
+            if (task.getUser().equals(name) && task.getOutcomeDate().getYear().equals(year)) {
                 if (task.getCondition()) {
                     int row = Integer.parseInt(task.getOutcomeDate().getDay()) / 6;
                     if (row > 4) row = 4;
