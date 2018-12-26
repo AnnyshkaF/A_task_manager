@@ -11,5 +11,6 @@ public interface TaskFields {
     String OUTCOME_DATE = "outcome_date";
     String CONDITION = "condition";
     String GROUP = "group";
+    String PASSWORD = "password";
 }
 

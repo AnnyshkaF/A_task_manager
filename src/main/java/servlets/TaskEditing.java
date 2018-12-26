@@ -43,7 +43,7 @@ public class TaskEditing extends HttpServlet {
             out.println("</body>\n</html>");
             return;
         }
-
+        out.println("<link rel=\"stylesheet\" href=\"style2.css\"/>\n");
         if (uri.equals("/A_task_man/TaskEditing/OK")) {
             String old_hash = request.getParameter("old_hash");
             Task old_task = taskBase.getTask(old_hash);
@@ -106,7 +106,8 @@ public class TaskEditing extends HttpServlet {
         sb.append("<form method=\"GET\" action=\"/A_task_man/TaskEditing/OK\">\n");
 
         sb.append("<input style=\"visibility:hidden\" type=\"text\" name=\"old_hash\" value=\"").append(hash).append("\" readonly>\n");
-        sb.append("Task name: <input type=\"text\" name=\"name\" value=\"").append(task.getName()).append("\">\n");
+        sb.append("<p>Task editing</p>");
+        sb.append("Task name: <input type=\"text\" name=\"name\" value=\"").append(task.getName()).append("\"><br>\n");
         sb.append("Task Description: <input type=\"text\" name=\"description\" value=\"").append(task.getDescription()).append("\">\n");
         sb.append("<br>Give a task to:<br>\n");    //select from users
         for (Map.Entry<String, String> entry : map.entrySet()) {

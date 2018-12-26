@@ -22,7 +22,6 @@ public class ProfileServlet extends HttpServlet {
 
         java.util.Date dateNow = new java.util.Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy");
-        //String year = formatForDateNow.format(dateNow);
 
         HttpSession session = request.getSession(false);
         PrintWriter out = response.getWriter();
@@ -31,28 +30,14 @@ public class ProfileServlet extends HttpServlet {
 
         out.println("<html><body>");
 
-        /*if (uri.equals("/ProfileServlet/change")) {
-            String tmp_year = request.getParameter("year");
-            if (tmp_year != null) {
-                year = tmp_year;
-            }
-            out.println("<script>alert(\"Does smt\");</script>");
-            request.getRequestDispatcher("ProfileServlet").forward(request, response);
-            return;
-            //request.setAttribute("year", year);
-
-        }*/
         if (uri.equals("/A_task_man/ProfileServlet/change")) {
 
             String tmp_year = request.getParameter("year");
             if (tmp_year != null) {
                 taskBase.year = tmp_year;
-            }else{
-
             }
             response.sendRedirect("/A_task_man/ProfileServlet");
             return;
-            //response.sendRedirect("/A_task_man/ProfileServlet/change?year=" + year);
         }
 
             if (session != null) {
@@ -112,7 +97,7 @@ public class ProfileServlet extends HttpServlet {
                 sb.append(" title=\"Done = ").append(done.get(index(i,j)).size());
                 sb.append(" Undone = ").append(undone.get(index(i,j)).size());
                 sb.append(" Todo = ").append(todo.get(index(i,j)).size()).append("\">");
-                sb.append("<a href=\"TasksPerPeriod/period?").append("r=").append(i).append("&c=").append(j).append("&year").append(year).append("\"></a>");
+                sb.append("<a href=\"TasksPerPeriod/period?").append("r=").append(i).append("&c=").append(j).append("&year=").append(year).append("\"></a>");
                 sb.append("</td>\n");
             }
             sb.append("</tr>\n");
@@ -122,12 +107,5 @@ public class ProfileServlet extends HttpServlet {
     }
     private static String index(int i, int j){
         return String.valueOf(i + "-" + j);
-    }
-
-    public static void main(String[] args) {
-        java.util.Date dateNow = new java.util.Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("yyyy");
-        String currentDate = formatForDateNow.format(dateNow);
-        System.out.println(currentDate);
     }
 }

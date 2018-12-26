@@ -1,18 +1,8 @@
 package model;
 
-import java.time.Instant;
 import java.util.ArrayList;
 
 public class Date {
-    public static ArrayList<String> days = new ArrayList<String>() {{
-        add("Mon");
-        add("Tue");
-        add("Wed");
-        add("Thu");
-        add("Fri");
-        add("Sat");
-        add("Sun");
-    }};
     public static ArrayList<String> months = new ArrayList<String>() {{
         add("Jan");
         add("Feb");
@@ -34,13 +24,9 @@ public class Date {
     private String year;
 
     public Date() {
-    }
+    };
 
-    ;
-
-    //http://localhost:8080/TaskAdding/add?name=task4&description=description4&user=user1&outcome_date=2018-12-07&time=17%3A59
     public Date(String date, String time) {
-        //06-12-2018 13:30
         String[] d = date.split("-");
         this.day = d[2];
         this.month = d[1];

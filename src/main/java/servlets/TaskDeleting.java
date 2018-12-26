@@ -35,14 +35,14 @@ public class TaskDeleting extends HttpServlet {
             out.println("<h2>Error loading from file</h2>");
             out.println("</body>\n</html>");
         }
-      
+
         ArrayList<String> hash = new ArrayList<>();
         ArrayList<String> groups = taskBase.getGroups(username);
         for (int i = 0; i < groups.size(); i++) {
             String curName = groups.get(i) + "_checkbox";
-             if(request.getParameter(curName) != null) {
+            if (request.getParameter(curName) != null) {
                 hash.add(request.getParameter(curName));
-             }
+            }
         }
         for (int i = 0; i < hash.size(); i++) {
             for (int j = 0; j < taskBase.getTaskBase().size(); j++) {

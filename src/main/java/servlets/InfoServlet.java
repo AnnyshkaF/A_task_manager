@@ -19,7 +19,7 @@ public class InfoServlet extends HttpServlet {
         String uri = request.getRequestURI();
         PrintWriter out = response.getWriter();
         out.println("<html>\n<body>\n");
-        out.println(getStyle());
+        out.println("<link rel=\"stylesheet\" href=\"style2.css\"/>\n");
         if (uri.equals("/A_task_man/InfoServlet/cancel")) {
             response.sendRedirect("/A_task_man/TaskTable");
             return;
@@ -69,72 +69,6 @@ public class InfoServlet extends HttpServlet {
         sb.append("<input type=\"submit\" value=\"edit\">\n");
         sb.append("<input style=\"visibility:hidden\" type=\"text\" name=\"hash\" value=\"").append(hash).append("\" readonly>\n");
         sb.append("</form><br>");
-        return sb.toString();
-    }
-    private String getStyle(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("  <style>\n\n" +
-                "info{\n" +
-                "  font-size: 30px;\n" +
-                "  font-weight: normal;\n" +
-                "  cursor: default;\n" +
-                "  text-shadow: 1px 1px white,\n" +
-                "               2px 2px #777;\n" +
-                "  color: #333;\n" +
-                "  transition: all 1s;\n" +
-                "}\n" +
-                " info:hover {\n" +
-                "    text-shadow: 1px 1px white,\n" +
-                "                 2px 2px tomato;\n" +
-                "    color: crimson;\n" +
-                "    }\n" +
-                "\n" +
-                "name, description, user, task_giver, income_date, outcome_date , group, condition{\n" +
-                "  font-size: 30px;\n" +
-                "  color: black;\n" +
-                "  background-color: white;\n" +
-                "  padding-left: 2%;\n" +
-                "\n" +
-                "}\n" +
-                "\n" +
-                "p {\n" +
-                "\tbackground: #1379FE;\n" +
-                "\tpadding: 8px;\n" +
-                "\tfont-size: 40px;\n" +
-                "\tcolor: white;\n" +
-                "\tborder-color: #1379FE;\n" +
-                "}\n" +
-                "\n" +
-                "input {\n" +
-                "  margin-left: auto;\n" +
-                "  margin-right: auto;\n" +
-                "  width: 300px;\n" +
-                "  display: inline;\n" +
-                "  padding: 10px 30px;\n" +
-                "  margin: 10px 20px;\n" +
-                "  position: relative;\n" +
-                "  overflow: hidden;\n" +
-                "  border: 2px solid #fe6637;\n" +
-                "  border-radius: 8px;\n" +
-                "  font-family: 'Montserrat', sans-serif; \n" +
-                "  color: #fe6637;\n" +
-                "  transition: .2s ease-in-out;\n" +
-                "}\n" +
-                "input:before {\n" +
-                "  content: \"\";\n" +
-                "  background: linear-gradient(90deg, rgba(255,255,255,.1), rgba(255,255,255,.5));\n" +
-                "  height: 50px;\n" +
-                "  width: 50px;\n" +
-                "}\n" +
-                "input:hover {\n" +
-                "  background: grey;\n" +
-                "  color: #fff;\n" +
-                "}\n" +
-                "input:hover:before {\n" +
-                "  left: 150px;\n" +
-                "  transition: .5s ease-in-out;\n" +
-                "} \n" +
-                "  \n</style>");
         return sb.toString();
     }
 }

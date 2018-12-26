@@ -22,7 +22,7 @@ public class Task {
         this.outcome_date = outcome_date;
         this.group = group;
         this.condition = condition;
-        this.hash = generateHash(name + description + group);
+        this.hash = generateHash(name + user + description + group);
     }
 
     private String generateHash(String str) {

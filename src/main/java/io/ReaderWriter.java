@@ -8,8 +8,8 @@ public class ReaderWriter {
 
     synchronized public void read(String filename, TreeMap<String, String> users) {
         try {
-            FileInputStream fstream = new FileInputStream(filename);
-            BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+            FileInputStream stream = new FileInputStream(filename);
+            BufferedReader br = new BufferedReader(new InputStreamReader(stream));
             String str;
             while ((str = br.readLine()) != null) {
                 String[] arr = str.split(":");
@@ -33,8 +33,11 @@ public class ReaderWriter {
             }
             writer.flush();
         } catch (IOException ex) {
-
             System.out.println(ex.getMessage());
         }
+    }
+
+    public static String calculateHash(String login, String password) {
+        return String.valueOf((login + password).hashCode());
     }
 }

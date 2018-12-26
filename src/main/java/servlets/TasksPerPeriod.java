@@ -19,13 +19,13 @@ public class TasksPerPeriod extends HttpServlet {
         String uri = request.getRequestURI();
         PrintWriter out = response.getWriter();
 
-        if(uri.equals("/A_task_man/TasksPerPeriod/cancel")) {
+        if (uri.equals("/A_task_man/TasksPerPeriod/cancel")) {
             response.sendRedirect("/A_task_man/ProfileServlet");
             return;
         }
         out.println("<html><head>");
         out.println("</head><body>");
-        out.println(getStyle());
+        out.println("<link rel=\"stylesheet\" href=\"style2.css\"/>\n");
         HttpSession session = request.getSession(false);
         String name = "";
         name = (String) session.getAttribute("name");
@@ -68,7 +68,7 @@ public class TasksPerPeriod extends HttpServlet {
             }
 
             ArrayList<Task> tmp = values.get(index(r, c));
-            if(tmp.size() > 0) {
+            if (tmp.size() > 0) {
                 sb.append("<table>\n");
                 sb.append("<tr>\n<th>Task</th>\n<th>Description</th>\n<th>User</th>\n<th>Head</th>\n<th>Income date</th>\n<th>Outcome date</th>\n<th>Group</th>\n</tr>\n");
                 for (int i = 0; i < tmp.size(); i++) {
@@ -83,56 +83,16 @@ public class TasksPerPeriod extends HttpServlet {
                     sb.append("</tr>\n");
                 }
                 sb.append("</table>\n");
+            } else {
+                sb.append("<div>Nothing</div>\n");
             }
-            else{sb.append("<div>Nothing</div>\n");}
         }
         taskBase.clear();
         return sb.toString();
     }
 
-    private static String index(int i, int j){
+    private static String index(int i, int j) {
         return String.valueOf(i + "-" + j);
-    }
-
-    private String getStyle(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("  <style>\n" +
-                "input {\n" +
-                "\tpadding: 10px 30px;\n" +
-                "\tborder: 2px solid #fe6637;\n" +
-                "\tborder-radius: 8px;\n" +
-                "\tfont-family: 'Montserrat', sans-serif;\n" +
-                "\tcolor: #fe6637;\n" +
-                "\ttransition: .2s ease-in-out;\n" +
-                "}\n" +
-                "\n" +
-                "input:before {\n" +
-                "\tcontent: \"\";\n" +
-                "\tbackground: linear-gradient(90deg, rgba(255, 255, 255, .1), rgba(255, 255, 255, .5));\n" +
-                "}\n" +
-                "\n" +
-                "input:hover {\n" +
-                "\tbackground: grey;\n" +
-                "\tcolor: #fff;\n" +
-                "}\n" +
-                "\n" +
-                "p {\n" +
-                "\tbackground: #1379FE;\n" +
-                "\tpadding: 8px;\n" +
-                "\tfont-size: 40px;\n" +
-                "\tcolor: white;\n" +
-                "\tborder-color: #1379FE;\n" +
-                "}\n" +
-                "\n" +
-                "table, th, td {\n" +
-                "  border: 1px solid black;\n" +
-                "  border-collapse: collapse;\n" +
-                "}\n" +
-                "\n" +
-                "table{\n" +
-                "  width: 100%;\n" +
-                "}\n</style>");
-        return sb.toString();
     }
 }
 

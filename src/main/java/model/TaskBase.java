@@ -33,7 +33,7 @@ public class TaskBase {
         taskBase.add(tmp);
     }
 
-    public void removeTask(Task task){
+    public void removeTask(Task task) {
         taskBase.remove(task);
     }
 
@@ -41,7 +41,7 @@ public class TaskBase {
         ArrayList<String> groups = new ArrayList<>();
         for (int i = 0; i < taskBase.size(); i++) {
             Task tmp = taskBase.get(i);
-            if(tmp.getUser().equals(username) && !tmp.getCondition()) {
+            if (tmp.getUser().equals(username) && !tmp.getCondition()) {
                 if (!groups.contains(tmp.getGroup())) {
                     groups.add(tmp.getGroup());
                 }
@@ -53,16 +53,16 @@ public class TaskBase {
     public ArrayList<Task> getTasks(String name, String group) {
         ArrayList<Task> tasks = new ArrayList<>();
         for (int i = 0; i < taskBase.size(); i++) {
-            if(containsUser(taskBase.get(i).getUser(), name) && taskBase.get(i).getGroup().equals(group) && taskBase.get(i).getCondition() == false){
+            if (containsUser(taskBase.get(i).getUser(), name) && taskBase.get(i).getGroup().equals(group) && taskBase.get(i).getCondition() == false) {
                 tasks.add(taskBase.get(i));
             }
         }
         return tasks;
     }
 
-    public Task getTask(String hash){
+    public Task getTask(String hash) {
         for (int i = 0; i < taskBase.size(); i++) {
-            if(taskBase.get(i).getHash().equals(hash)) {
+            if (taskBase.get(i).getHash().equals(hash)) {
                 return taskBase.get(i);
             }
         }
@@ -74,10 +74,10 @@ public class TaskBase {
     }
 
 
-    private boolean containsUser(String users, String user){
+    private boolean containsUser(String users, String user) {
         String[] name = users.split(" ");
         for (int i = 0; i < name.length; i++) {
-            if(name[i].equals(user)){
+            if (name[i].equals(user)) {
                 return true;
             }
         }
@@ -113,7 +113,7 @@ public class TaskBase {
         }
         for (int i = 0; i < taskBase.size(); i++) {
             Task task = taskBase.get(i);
-            if (task.getUser().equals(name)&& task.getOutcomeDate().getYear().equals(year)) {
+            if (task.getUser().equals(name) && task.getOutcomeDate().getYear().equals(year)) {
                 if (!task.isExpired() && !task.getCondition()) {
                     int row = Integer.parseInt(task.getOutcomeDate().getDay()) / 6;
                     if (row > 4) row = 4;
@@ -154,22 +154,22 @@ public class TaskBase {
         return sb.toString();
     }
 
-    private static String index(int i, int j){
+    private static String index(int i, int j) {
         return String.valueOf(i + "-" + j);
     }
 
-    public void loadTaskBase(){
+    public void loadTaskBase() {
         try {
             new TaskIO().loadTasksFromFile("tasks.xml", this);
         } catch (Exception e) {
         }
     }
-    public void saveTaskBase(){
+
+    public void saveTaskBase() {
         try {
             new TaskIO().saveTasksToFile("tasks.xml", this);
         } catch (Exception e) {
         }
     }
-
 }
 
