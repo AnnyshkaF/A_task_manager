@@ -5,7 +5,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
   <servlet>
       <servlet-name>LoginServlet</servlet-name>
-      <servlet-class>LoginServlet</servlet-class>
+      <servlet-class>servlets.LoginServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
@@ -14,7 +14,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
   <servlet>
       <servlet-name>RegisterServlet</servlet-name>
-      <servlet-class>RegisterServlet</servlet-class>
+      <servlet-class>servlets.RegisterServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>RegisterServlet</servlet-name>
@@ -23,16 +23,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
   <servlet>
     <servlet-name>ProfileServlet</servlet-name>
-    <servlet-class>ProfileServlet</servlet-class>
+    <servlet-class>servlets.ProfileServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>ProfileServlet</servlet-name>
-    <url-pattern>/ProfileServlet</url-pattern>
+    <url-pattern>/ProfileServlet/*</url-pattern>
   </servlet-mapping>
 
   <servlet>
     <servlet-name>LogoutServlet</servlet-name>
-    <servlet-class>LogoutServlet</servlet-class>
+    <servlet-class>servlets.LogoutServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LogoutServlet</servlet-name>
@@ -41,7 +41,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
   <servlet>
     <servlet-name>TaskTable</servlet-name>
-    <servlet-class>TaskTable</servlet-class>
+    <servlet-class>servlets.TaskTable</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TaskTable</servlet-name>
@@ -50,7 +50,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
 <servlet>
     <servlet-name>TaskAdding</servlet-name>
-    <servlet-class>TaskAdding</servlet-class>
+    <servlet-class>servlets.TaskAdding</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TaskAdding</servlet-name>
@@ -59,7 +59,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
 <servlet>
     <servlet-name>TaskDeleting</servlet-name>
-    <servlet-class>TaskDeleting</servlet-class>
+    <servlet-class>servlets.TaskDeleting</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TaskDeleting</servlet-name>
@@ -68,7 +68,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
 <servlet>
     <servlet-name>InfoServlet</servlet-name>
-    <servlet-class>InfoServlet</servlet-class>
+    <servlet-class>servlets.InfoServlet</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>InfoServlet</servlet-name>
@@ -77,11 +77,20 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
 
 <servlet>
     <servlet-name>TaskEditing</servlet-name>
-    <servlet-class>TaskEditing</servlet-class>
+    <servlet-class>servlets.TaskEditing</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>TaskEditing</servlet-name>
     <url-pattern>/TaskEditing/*</url-pattern>
+  </servlet-mapping>
+
+<servlet>
+    <servlet-name>TasksPerPeriod</servlet-name>
+    <servlet-class>servlets.TasksPerPeriod</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TasksPerPeriod</servlet-name>
+    <url-pattern>/TasksPerPeriod/*</url-pattern>
   </servlet-mapping>
 
 </web-app>

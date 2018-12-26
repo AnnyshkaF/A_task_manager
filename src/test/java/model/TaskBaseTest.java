@@ -14,16 +14,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class TaskBaseTest {
-    TaskBase taskBase = TaskBase.getInstance();
-    String name = "name";
-    String description = "description";
-    String user = "user";
-    String task_giver = "task_giver";
-    String group = "group";
-    Date date1 = new Date("2017-12-21", "10:10");
-    Date date2 = new Date("2017-12-21", "10:09");
-    String year = "2017";
-    boolean condition = false;
+    private TaskBase taskBase = TaskBase.getInstance();
+    private String name = "name";
+    private String description = "description";
+    private String user = "user";
+    private String task_giver = "task_giver";
+    private String group = "group";
+    private Date date1 = new Date("2017-12-21", "10:10");
+    private Date date2 = new Date("2017-12-21", "10:09");
+    private String year = "2017";
+    private boolean condition = false;
 
     @Test
     public void addTaskTest() {
